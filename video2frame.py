@@ -3,7 +3,8 @@ import cv2
 import os
 import argparse
 
-def video2frames(video_path, odir='frames', interval=1):
+def video2frames(video_path, odir='frames', file_type="jpeg", interval=1):
+    file_type = file_type.lower()
     # create output dir if it isn't created.
     os.makedirs(odir,exist_ok=True)
 
@@ -21,7 +22,7 @@ def video2frames(video_path, odir='frames', interval=1):
     while success:
         if count % interval == 0:
             # Save frame
-            frame=os.path.join(odir,f"frame_{saved_count:06d}.jpg")
+            frame=os.path.join(odir,f"frame_{saved_count:06d}.{file_type}")
             cv2.imwrite(frame,image)
             saved_count +=1
         success, image= video.read()
@@ -34,11 +35,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Frame extractor from video. Created by Yusuf Emre ALBAYRAK for project HÜMA in TEKNOFEST 2025 HYZ competition.")
     parser.add_argument('video_path',help="Input video path.")
     parser.add_argument('-o',dest="output_dir",default="frames",help="The folder where the frames will be extracted.")
-    parser.add_argument('-i',dest="interval",type=int,default=1, help="Frame interval (every N'th frame).")
+    parser.add_argument('--file_type',"-ft", default="jpeg",choices=['png','jpg','jpeg','webp'],help="File extension of the extracted frame.")
+    parser.add_argument('-i',dest="interval", type=int,default=1, help="Frame interval (every N'th frame).")
     
     args=parser.parse_args()
     
     try:
-        video2frames(args.video_path,args.output_dir,args.interval)
+        video2frames(args.video_path,args.output_dir,args.file_type,args.interval)
     except Exception as e:
         print(f"[ERROR] {e}")
