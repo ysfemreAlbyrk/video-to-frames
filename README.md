@@ -9,11 +9,12 @@ This tool extracts frames from a video file and saves them as images in a specif
 ## Usage
 
 ```bash
-python video2frame.py <video_path> [-o OUTPUT_DIR] [-i INTERVAL]
+python video2frame.py [-h] [-o OUTPUT_DIR] [--file_type {png,jpg,jpeg,webp}] [-i INTERVAL] video_path
 ```
 
 - `<video_path>`: Path to the input video file.
 - `-o OUTPUT_DIR`: (Optional) Output directory for extracted frames. Default is `frames`.
+- `--file_type` or `-ft`: (Optional) File extension of the extracted frame. [ `png` `jpg` `jpeg` `webp` ]
 - `-i INTERVAL`: (Optional) Interval for frame extraction (every N'th frame). Default is `1`.
 
 ## Example
@@ -27,7 +28,7 @@ python video2frame.py input.mp4
 Extract every 5th frame and save to `output_frames` folder:
 
 ```bash
-python video2frame.py input.mp4 -o output_frames -i 5
+python video2frame.py input.mp4 -o output_frames -ft png -i 5
 ```
 
 ## Requirements
